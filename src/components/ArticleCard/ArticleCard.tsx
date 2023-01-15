@@ -2,16 +2,15 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import Highlighter from "react-highlight-words";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import { CardActionArea } from "@mui/material";
 
 import { useGetDate, useShortText, useAppSelector } from "../../hooks";
-import {
-  ArticleCard,
-  ArticleCardActionArea,
-  ArticleCardContent,
-  ArticleDate,
-} from "./ArticleCard.styled";
+import { IArticleProps } from "../../interfaces";
+import s from "./ArticleCard.module.scss";
 
-const ArticleCardsList: React.FC<Article> = ({
+const ArticleCardsList: React.FC<IArticleProps> = ({
   title,
   summary,
   imageUrl,
@@ -23,49 +22,36 @@ const ArticleCardsList: React.FC<Article> = ({
   const query = useAppSelector((state) => state.query);
 
   return (
-    <ArticleCard>
-      <ArticleCardActionArea>
+    <Card className={s.card}>
+      <CardActionArea className={s.cardAction}>
         <CardMedia component="img" height="217" image={imageUrl} alt={title} />
-        <ArticleCardContent>
-          <ArticleDate>
+        <CardContent className={s.cardContent}>
+          <Typography className={s.articleDate}>
             <CalendarTodayOutlinedIcon fontSize="small" />
             {date}
-          </ArticleDate>
+          </Typography>
           <Typography
             gutterBottom
             variant="h4"
             component="h4"
-            sx={{
-              fontSize: 24,
-              fontWeight: 600,
-              color: "#363636",
-              marginBottom: "20px",
-            }}
+            className={s.title}
           >
             <Highlighter
               searchWords={[...query.split(" ")]}
               textToHighlight={shortTitle}
             />
           </Typography>
-          <Typography color="#363636" sx={{ marginBottom: "20px" }}>
+          <Typography className={s.summary}>
             <Highlighter
               searchWords={[...query.split(" ")]}
               textToHighlight={shortSummary}
             />
           </Typography>
-          <Typography sx={{ fontWeight: 700 }}>Read more →</Typography>
-        </ArticleCardContent>
-      </ArticleCardActionArea>
-    </ArticleCard>
+          <Typography className={s.link}>Read more →</Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
   );
-};
-
-type Article = {
-  title: string;
-  summary: string;
-  imageUrl: string;
-  publishedAt: string;
-  id: number;
 };
 
 export default ArticleCardsList;

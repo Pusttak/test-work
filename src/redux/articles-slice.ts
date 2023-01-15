@@ -16,11 +16,11 @@ export const articlesApi = createApi({
     baseUrl: "https://api.spaceflightnewsapi.net/v3/articles",
   }),
   endpoints: (builder) => ({
-    getArticlesByQuery: builder.query({
+    getAllArticles: builder.query({
       query: (query) => ({
         url: `/`,
         method: "GET",
-        params: { _limit: 12, title_contains: query },
+        params: { _limit: 99 },
       }),
       providesTags: ["Articles"],
     }),
@@ -43,7 +43,7 @@ export const articlesApi = createApi({
 });
 
 export const {
-  useGetArticlesByQueryQuery,
+  useGetAllArticlesQuery,
   useGetArticleByIdQuery,
   useGetArticlesCountQuery,
 } = articlesApi;

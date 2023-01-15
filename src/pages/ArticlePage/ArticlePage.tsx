@@ -2,14 +2,9 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
 import CardMedia from "@mui/material/CardMedia";
 
+import Loader from "../../components/Loader/Loader";
 import { useGetArticleByIdQuery } from "../../redux/articles-slice";
-import {
-  ArticleContainer,
-  Title,
-  Summary,
-  GoBackLink,
-} from "./ArticlePage.styled";
-import Loader from "../../components/Loader";
+import s from "./ArticlesPage.module.scss";
 
 const ArticlePage: React.FC = () => {
   const { articleId } = useParams<{ articleId?: string }>();
@@ -27,15 +22,15 @@ const ArticlePage: React.FC = () => {
               height="245"
               image={data.imageUrl}
               alt={data.title}
-              sx={{ position: "absolute", top: 0 }}
+              className={s.img}
             />
-            <ArticleContainer>
-              <Title>{data.title}</Title>
-              <Summary>{data.summary}</Summary>
-            </ArticleContainer>
-            <GoBackLink>
+            <div className={s.container}>
+              <h1 className={s.title}>{data.title}</h1>
+              <p className={s.summary}>{data.summary}</p>
+            </div>
+            <p className={s.link}>
               <Link to={location.state.from}>← back to Articles</Link>
-            </GoBackLink>
+            </p>
           </Box>
         ))}
     </>
